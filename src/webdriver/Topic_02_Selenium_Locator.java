@@ -81,6 +81,7 @@ public class Topic_02_Selenium_Locator {
 	driver.findElement(By.xpath("//input[@name='email']")).sendKeys("trangdth202@gmail.com");
 		
 	}
+	
 
 	@AfterClass
 	public void afterClass() {
