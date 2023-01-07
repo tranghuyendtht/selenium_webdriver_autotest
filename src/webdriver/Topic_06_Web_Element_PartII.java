@@ -47,7 +47,7 @@ public class Topic_06_Web_Element_PartII {
 
 	}
 
-	// @Test
+	@Test
 	public void TC_01_isDisplayed() {
 
 		// Kiểm tra email textbox có tồn tại không
@@ -60,7 +60,7 @@ public class Topic_06_Web_Element_PartII {
 
 		// Kiểm tra age radio có tồn tại không
 		if (driver.findElement(ageRadio).isDisplayed()) {
-			driver.findElement(ageRadio).click();
+			// driver.findElement(ageRadio).click();
 			System.out.println("Element is displayed");
 		} else {
 			System.out.println("Element is not displayed");
@@ -83,7 +83,7 @@ public class Topic_06_Web_Element_PartII {
 
 	}
 
-	//@Test
+	@Test
 	public void TC_02_isEnable() {
 
 		// Kiểm tra email Textbox có enabled không
@@ -177,33 +177,205 @@ public class Topic_06_Web_Element_PartII {
 
 	@Test
 	public void TC_03_isSelected() {
-		
+
 		// Kiểm tra xem các rardio và Checkbox có thực sự đang không được chọn không
 		Assert.assertFalse(driver.findElement(ageRadio).isSelected());
 		Assert.assertFalse(driver.findElement(languageJava).isSelected());
-		
+
 		// Click để chọn
 		driver.findElement(ageRadio).click();
 		driver.findElement(languageJava).click();
-		
+
 		// Kiểm tra sau khi chọn
 		Assert.assertTrue(driver.findElement(ageRadio).isSelected());
 		Assert.assertTrue(driver.findElement(languageJava).isSelected());
-		
+
 		// Click để bỏ chọn
 		driver.findElement(languageJava).click();
-		
+
 		// Kiểm tra xem đã được bỏ chọn hay chưa
 		Assert.assertFalse(driver.findElement(languageJava).isSelected());
 	}
 
 	@Test
 	public void TC_04_Combined() {
+		driver.get("https://login.mailchimp.com/signup/");
 
+		// Nhập dữ liệu hợp lệ vào trường email
+		driver.findElement(By.cssSelector("#email")).sendKeys("trangdth.20292@gmail.com");
+
+		By passwordAccount = By.cssSelector("#new_password");
+		By buttonSignUp = By.cssSelector("");
+
+		// Nhập pass chứa chuỗi ký tự abc in thường
+		driver.findElement(passwordAccount).sendKeys("abc");
+		sleepInSecond(3);
+
+		// Verify lowercasse
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'lowercase-char completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'uppercase-char not-completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'number-char not-completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'special-char not-completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = '8-char not-completed']")).isDisplayed());
+
+		// Nhập pass chứa chuỗi ký tự abc in hoa
+		driver.findElement(passwordAccount).clear();
+		driver.findElement(passwordAccount).sendKeys("ABC");
+
+		sleepInSecond(3);
+		// Verify Upper Case
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'lowercase-char not-completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'uppercase-char completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'number-char not-completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'special-char not-completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = '8-char not-completed']")).isDisplayed());
+
+		// Nhập pass chứa chuỗi số
+		driver.findElement(passwordAccount).clear();
+		driver.findElement(passwordAccount).sendKeys("123");
+
+		sleepInSecond(3);
+		// Verify Upper Case
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'lowercase-char not-completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'uppercase-char not-completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'number-char completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'special-char not-completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = '8-char not-completed']")).isDisplayed());
+
+		// Nhập pass chứa chuỗi ký tự đặc biệt
+		driver.findElement(passwordAccount).clear();
+		driver.findElement(passwordAccount).sendKeys("@#$");
+
+		sleepInSecond(3);
+		// Verify Upper Case
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'lowercase-char not-completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'uppercase-char not-completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'number-char not-completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'special-char completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = '8-char not-completed']")).isDisplayed());
+
+		// Nhập pass nhiều hơn 8 ký tự
+		driver.findElement(passwordAccount).clear();
+		driver.findElement(passwordAccount).sendKeys("123456789");
+
+		sleepInSecond(3);
+		// Verify Upper Case
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'lowercase-char not-completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'uppercase-char not-completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'number-char completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = 'special-char not-completed']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class = '8-char completed']")).isDisplayed());
+
+		// Nhập pass hợp lệ tất cả các điều kiện
+		driver.findElement(passwordAccount).clear();
+		driver.findElement(passwordAccount).sendKeys("123456aA@");
+
+		sleepInSecond(3);
+		// Verify Upper Case
+		Assert.assertFalse(driver.findElement(By.xpath("//li[@class = 'lowercase-char completed']")).isDisplayed());
+		Assert.assertFalse(driver.findElement(By.xpath("//li[@class = 'uppercase-char completed']")).isDisplayed());
+		Assert.assertFalse(driver.findElement(By.xpath("//li[@class = 'number-char completed']")).isDisplayed());
+		Assert.assertFalse(driver.findElement(By.xpath("//li[@class = 'special-char completed']")).isDisplayed());
+		Assert.assertFalse(driver.findElement(By.xpath("//li[@class = '8-char completed']")).isDisplayed());
+
+	}
+
+	@Test
+	public void loginEmptyData() {
+		// Login vào trang http://live.techpanda.org/
+		driver.get("http://live.techpanda.org/");
+		sleepInSecond(3);
+
+		driver.findElement(By.xpath("//div[@class = 'footer']//a[@title = 'My Account']")).click();
+		driver.findElement(By.cssSelector("#send2")).click();
+		sleepInSecond(3);
+
+		// Verify thông báo lỗi
+		Assert.assertEquals(driver.findElement(By.cssSelector("#advice-required-entry-email")).getText(),
+				"This is a required field.");
+		Assert.assertEquals(driver.findElement(By.cssSelector("#advice-required-entry-pass")).getText(),
+				"This is a required field.");
+
+	}
+	
+	@Test
+	public void loginInvalidEmail() {
+		// Login vào trang http://live.techpanda.org/
+				driver.get("http://live.techpanda.org/");
+				sleepInSecond(3);
+
+				driver.findElement(By.xpath("//div[@class = 'footer']//a[@title = 'My Account']")).click();
+				sleepInSecond(3);
+				
+				
+				// Nhập sai thông tin email
+				driver.findElement(By.cssSelector("#email")).sendKeys("1234@123123");
+				driver.findElement(By.cssSelector("#pass")).sendKeys("123456");
+				driver.findElement(By.cssSelector("#send2")).click();
+				sleepInSecond(3);
+
+				// Verify thông báo lỗi
+				Assert.assertEquals(driver.findElement(By.cssSelector("#advice-validate-email-email")).getText(),
+						"Please enter a valid email address. For example johndoe@domain.com.");
+				
+	}
+	
+	@Test
+	public void loginInvalidPassword() {
+		// Login vào trang http://live.techpanda.org/
+				driver.get("http://live.techpanda.org/");
+				sleepInSecond(3);
+
+				driver.findElement(By.xpath("//div[@class = 'footer']//a[@title = 'My Account']")).click();
+				sleepInSecond(3);
+				
+				
+				// Nhập sai thông tin email
+				driver.findElement(By.cssSelector("#email")).sendKeys("automation@gmail.com");
+				driver.findElement(By.cssSelector("#pass")).sendKeys("126");
+				driver.findElement(By.cssSelector("#send2")).click();
+				sleepInSecond(3);
+
+				// Verify thông báo lỗi
+				Assert.assertEquals(driver.findElement(By.cssSelector("#advice-validate-password-pass")).getText(),
+						"Please enter 6 or more characters without leading or trailing spaces.");
+				
+	}
+	
+	@Test
+	public void loginInvalidEmailOrPassword() {
+		// Login vào trang http://live.techpanda.org/
+				driver.get("http://live.techpanda.org/");
+				sleepInSecond(3);
+
+				driver.findElement(By.xpath("//div[@class = 'footer']//a[@title = 'My Account']")).click();
+				sleepInSecond(3);
+				
+				
+				// Nhập sai thông tin email
+				driver.findElement(By.cssSelector("#email")).sendKeys("automation@gmail.com");
+				driver.findElement(By.cssSelector("#pass")).sendKeys("126123456");
+				driver.findElement(By.cssSelector("#send2")).click();
+				
+				sleepInSecond(3);
+
+				// Verify thông báo lỗi
+				Assert.assertEquals(driver.findElement(By.xpath("//li[@class = 'error-msg']//span")).getText(),
+						"Invalid login or password.");
+				
+	}
+
+	public void sleepInSecond(long timeInSecond) {
+
+		try {
+			Thread.sleep(timeInSecond * 1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@AfterClass
 	public void afterClass() {
-		// driver.quit();
+		driver.quit();
 	}
 }
