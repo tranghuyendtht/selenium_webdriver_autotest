@@ -39,7 +39,7 @@ public class Topic_05_WebBrowser {
 		// Khi số tab trên trình duyệt >=2, close sẽ chỉ đóng tab hiện tại mà nó đang đứng
 		driver.close();
 		
-		// Không quan tâm có bao nhiêu tab trên trình duyệt, quit sẽ đóng hết toàn bộ cửa sổ
+		// Không quan tâm có bao nhiêu tab trên trình duyệt, quit sẽ đóng hết toàn bộ cửa sổ --> đóng hẳn browser
 		driver.quit();
 		
 		//Kết quả sau khi tìm thấy 1 element
