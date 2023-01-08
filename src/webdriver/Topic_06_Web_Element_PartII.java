@@ -1,5 +1,6 @@
 package webdriver;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -15,6 +16,11 @@ public class Topic_06_Web_Element_PartII {
 	WebDriver driver;
 	String projectPath = System.getProperty("user.dir");
 	String osName = System.getProperty("os.name");
+	String emailAddress;
+	String firstName;
+	String middleName;
+	String lastName;
+	String fullName;
 
 	// Khai báo biến toàn cục nếu muốn tại đây, nhưng cần khai báo kiểu By
 	By emailTextbox = By.id("email");
@@ -30,6 +36,8 @@ public class Topic_06_Web_Element_PartII {
 	By interestDisabled = By.cssSelector("#check-disbaled");
 	By slider2 = By.cssSelector("#slider-2");
 	By languageJava = By.cssSelector("#java");
+	
+	
 
 	@BeforeClass
 	public void beforeClass() {
@@ -40,7 +48,15 @@ public class Topic_06_Web_Element_PartII {
 		}
 
 		driver = new ChromeDriver();
+		
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		Random rand = new Random();
+		emailAddress = "automationFC" + rand + "@gmail.com";
+		
+		firstName = "Doan";
+		middleName = "Huyen";
+		lastName = "Trang";
+		fullName = firstName + " " + middleName + " "  + lastName;
 		// Truy cập vào trang https://automationfc.github.io/basic-form/index.html
 
 		driver.get("https://automationfc.github.io/basic-form/index.html");
@@ -281,7 +297,7 @@ public class Topic_06_Web_Element_PartII {
 	}
 
 	@Test
-	public void loginEmptyData() {
+	public void login_TC1_loginEmptyData() {
 		// Login vào trang http://live.techpanda.org/
 		driver.get("http://live.techpanda.org/");
 		sleepInSecond(3);
@@ -299,7 +315,7 @@ public class Topic_06_Web_Element_PartII {
 	}
 	
 	@Test
-	public void loginInvalidEmail() {
+	public void login_TC2_loginInvalidEmail() {
 		// Login vào trang http://live.techpanda.org/
 				driver.get("http://live.techpanda.org/");
 				sleepInSecond(3);
@@ -321,7 +337,7 @@ public class Topic_06_Web_Element_PartII {
 	}
 	
 	@Test
-	public void loginInvalidPassword() {
+	public void login_TC3_loginInvalidPassword() {
 		// Login vào trang http://live.techpanda.org/
 				driver.get("http://live.techpanda.org/");
 				sleepInSecond(3);
@@ -343,7 +359,7 @@ public class Topic_06_Web_Element_PartII {
 	}
 	
 	@Test
-	public void loginInvalidEmailOrPassword() {
+	public void login_TC4_loginInvalidEmailOrPassword() {
 		// Login vào trang http://live.techpanda.org/
 				driver.get("http://live.techpanda.org/");
 				sleepInSecond(3);
@@ -364,6 +380,8 @@ public class Topic_06_Web_Element_PartII {
 						"Invalid login or password.");
 				
 	}
+	
+	
 
 	public void sleepInSecond(long timeInSecond) {
 
