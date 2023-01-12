@@ -153,19 +153,7 @@ public class Topic_07_Textbox_Textarea {
 
 	}
 
-	@Test
-	public void TC_03_HTML_Dropdownlist() {
-		driver.get("https://demo.nopcommerce.com/register");
-		sleepInSecond(3);
-		driver.findElement(By.cssSelector("a.ico-register")).click();
-		sleepInSecond(5);
-		
-		// Nhập dữ liệu vào form
-		driver.findElement(By.id("gender-female")).click();
-		driver.findElement(By.id("FirstName")).sendKeys("Doan");
-		driver.findElement(By.id("LastName")).sendKeys("Trang");
-
-	}
+	
 
 	public void sleepInSecond(long sleepInSec) {
 		try {
